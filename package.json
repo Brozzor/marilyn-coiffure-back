@@ -26,6 +26,7 @@
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "mongoose": "^5.11.9",
+    "nodemailer": "^6.4.17",
     "nodemon": "^2.0.6",
     "random-key": "^0.3.2"
   }
