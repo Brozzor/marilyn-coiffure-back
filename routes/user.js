@@ -2,7 +2,7 @@
 //db and schema
 const User = require("../db/type/user");
 const UserShema = require("../db/shema/user");
-const database = require("../db/model");
+
 //lib
 const db = require("dotenv").config();
 const bcrypt = require("bcrypt");
