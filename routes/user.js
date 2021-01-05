@@ -2,13 +2,12 @@
 //db and schema
 const User = require("../db/type/user");
 const UserShema = require("../db/shema/user");
-
+const database = require("../db/connection");
 //lib
-const db = require("dotenv").config();
+
 const bcrypt = require("bcrypt");
 const mailCheck = require("email-validator");
 const randKey = require("random-key");
-const notifications = require("../services/notifications");
 const isUserExist = require("../services/isUserExist");
 const log = require("../services/logs");
 const mail = require("../services/mail")
