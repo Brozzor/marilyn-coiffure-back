@@ -17,9 +17,6 @@ async function registerUser(req, res) {
   const password = await bcrypt.hash(req.body.password, salt);
   const ip = req.headers["x-forwarded-for"].split(',')[0] || req.connection.remoteAddress;
 
-  if (!(await log.checkLog(req, "register.success"))) {
-    return res.sendStatus(417);
-  }
 
   if (await isUserExist.byMail(req.body.mail)) {
     return res.status(400).json({
@@ -27,19 +24,13 @@ async function registerUser(req, res) {
     });
   }
 
-  if ((await isUserExist.byPseudo(req.body.pseudo)) && !/^[A-Z,a-z,0-9]{4,12}$/.test(req.body.pseudo)) {
-    return res.status(400).json({
-      status: "Pseudo is already use",
-    });
-  }
+  newUser = new UserShema(new User(req.body.mail, req.body.firstname, req.body.lastname, req.body.address, req.body.city, req.body.zip, password, req.body.mobile, ip));
 
-  newUser = new UserShema(new User(req.body.mail, req.body.pseudo, password, ip));
   newUser.save((err, data) => {
     if (err) {
       console.log(err);
       return res.sendStatus(400);
     } else {
-      log.addLog(req, "register.success." + data._id);
       return updateUser(data._id, randKey.generate(250), res);
     }
   });
@@ -50,14 +41,9 @@ async function connectUser(req, res) {
     return res.sendStatus(400);
   }
 
-  if (!(await log.checkLog(req, "connection.error"))) {
-    return res.sendStatus(417);
-  }
-
   const user = await UserShema.findOne({ mail: req.body.mail });
 
   if (!user) {
-    await log.addLog(req, "connection.error");
     return res.status(400).json({
       status: "error - mail or password is invalid",
     });
@@ -67,7 +53,6 @@ async function connectUser(req, res) {
   if (decodedHash) {
     return updateUser(user._id, randKey.generate(250), res);
   } else {
-    await log.addLog(req, "connection.error");
     return res.status(400).json({
       status: "error - mail or password is invalid",
     });
@@ -88,6 +73,7 @@ async function myInfo(req, res) {
   return res.status(200).json(req.userByToken);
 }
 
+/*
 async function infoUser(req, res) {
   const userByToken = await UserShema.findOne({ _id: req.params.id }, { _id: 1, friends: 1, watchList: 1, pseudo: 1, createDate: 1, lastView: 1, rank: 1, avatar: 1, bio: 1 });
   if (userByToken) {
@@ -130,26 +116,7 @@ async function editUser(req, res) {
   );
   return res.sendStatus(200);
 }
-
-async function deleteNotification(req, res) {
-  await notifications.deleteNotif(req.userByToken._id, req.params.id);
-  return res.status(200).json({
-    status: "success",
-  });
-}
-
-async function readNotification(req, res) {
-  await notifications.readNotif(req.userByToken._id, req.body.id);
-  return res.status(200).json({
-    status: "success",
-  });
-}
-async function sendNotification(req, res) {
-  await notifications.sendNotif(req.userByToken._id, req.body.id);
-  return res.status(200).json({
-    status: "success",
-  });
-}
+*/
 
 async function updateUser(id, tokenSession, res) {
   const update = await UserShema.findOneAndUpdate({ _id: id }, { $set: { tokenSession: tokenSession } });
@@ -179,7 +146,7 @@ async function lostPassword(req, res) {
         <div align="center">
 					<br />
 					<p>Reset your password link :</p><br />
-          <u><a href="https://clicknchill.net/lost-password/${token}">https://clicknchill.net/lost-password/${token}</a></u><br />
+          <u><a href="https://**********.net/lost-password/${token}">https://*************.net/lost-password/${token}</a></u><br />
 			</div>
         `;
   mail.mailOptions.to = req.body.mail;
@@ -187,7 +154,6 @@ async function lostPassword(req, res) {
 
   mail.transporter.sendMail(mail.mailOptions, function (error, info) {
     if (error) {
-      //console.log(error);
       return res.status(400).json({ error: "Sorry , retry later" });
     } else {
       return res.status(200).json({ status: "If the account exists, a mail has been sent to this address" });
@@ -227,9 +193,7 @@ module.exports = {
   registerUser,
   connectUser,
   reconnectUser,
-  infoUser,
   myInfo,
-  editUser,
   lostPassword,
   resetPassword
 };
