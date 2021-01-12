@@ -1,5 +1,5 @@
 module.exports = class Salon {
     constructor(balance) {
-        this.balance = balance
+        this.balance = balance;
     }
 }
