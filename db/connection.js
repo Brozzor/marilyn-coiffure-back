@@ -5,7 +5,8 @@
 
 const mongoose = require("mongoose");
 const db = require('dotenv').config()
-mongoose.connect(`mongodb+srv://${process.env.USERNAMEATLAS}:${process.env.PASSWORDATLAS}@cluster0.ibuqu.mongodb.net/blog?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+
+mongoose.connect(`mongodb+srv://${process.env.DBUSERNAME}:${process.env.DBPASSWORD}@cluster0.ibuqu.mongodb.net/projet1?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
 let connection = mongoose.connection;
