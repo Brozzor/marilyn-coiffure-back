@@ -9,18 +9,24 @@ const bcrypt = require("bcrypt");
 const mailCheck = require("email-validator");
 const randKey = require("random-key");
 const isUserExist = require("../services/isUserExist");
-const mail = require("../services/mail")
+const mail = require("../services/mail");
 
 // Function
 async function registerUser(req, res) {
+  if (!req.body.mail || !req.body.firstname || !req.body.lastname || !req.body.address || !req.body.city || !req.body.zip || !req.body.mobile || !req.body.password) {
+    return res.status(400).json({
+      status: "Veuillez remplir completement le formulaire d'inscription",
+    });
+  }
+
   const salt = await bcrypt.genSalt();
   const password = await bcrypt.hash(req.body.password, salt);
-  const ip = req.headers["x-forwarded-for"].split(',')[0] || req.connection.remoteAddress;
-
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  //const ip = req.headers["x-forwarded-for"].split(',')[0] || req.connection.remoteAddress;
 
   if (await isUserExist.byMail(req.body.mail)) {
     return res.status(400).json({
-      status: "Mail is already use",
+      status: "Votre adresse mail est déjà utiliser",
     });
   }
 
@@ -137,7 +143,7 @@ async function lostPassword(req, res) {
   }
 
   const now = Math.round(+new Date() / 1000);
-  if ((now - userByMail.resetDate) < 120){
+  if (now - userByMail.resetDate < 120) {
     return res.status(400).json({ error: "Sorry , retry later" });
   }
 
@@ -150,7 +156,7 @@ async function lostPassword(req, res) {
 			</div>
         `;
   mail.mailOptions.to = req.body.mail;
-  await UserShema.findOneAndUpdate({ _id: userByMail._id }, { $set: { resetToken: token,resetDate: Math.round(+new Date() / 1000) } });
+  await UserShema.findOneAndUpdate({ _id: userByMail._id }, { $set: { resetToken: token, resetDate: Math.round(+new Date() / 1000) } });
 
   mail.transporter.sendMail(mail.mailOptions, function (error, info) {
     if (error) {
@@ -162,31 +168,29 @@ async function lostPassword(req, res) {
 }
 
 async function resetPassword(req, res) {
-
-  if (!req.body.resetToken){
+  if (!req.body.resetToken) {
     return res.sendStatus(400);
   }
 
   const userByResetToken = await UserShema.findOne({ resetToken: req.body.resetToken });
   const now = Math.round(+new Date() / 1000);
 
-  if (!userByResetToken || (now - userByResetToken.resetDate) > 1200) {
+  if (!userByResetToken || now - userByResetToken.resetDate > 1200) {
     return res.sendStatus(400);
   }
 
-  if (!req.body.password){
+  if (!req.body.password) {
     return res.sendStatus(200);
   }
 
-  if (req.body.password.length < 6){
+  if (req.body.password.length < 6) {
     return res.status(400).json({ error: "Sorry , your password is too short (min length: 6)" });
-  }else{
+  } else {
     const salt = await bcrypt.genSalt();
     const password = await bcrypt.hash(req.body.password, salt);
     await UserShema.findOneAndUpdate({ _id: userByResetToken._id }, { $set: { password: password } });
     return res.sendStatus(200);
   }
-
 }
 
 module.exports = {
@@ -195,5 +199,5 @@ module.exports = {
   reconnectUser,
   myInfo,
   lostPassword,
-  resetPassword
+  resetPassword,
 };

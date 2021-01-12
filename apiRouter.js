@@ -21,19 +21,19 @@ exports.router = (function () {
   // my info
   apiRouter.route("/info").get(verifyToken, user.myInfo);
 
+  /*
   // info user
   apiRouter.route("/info/:id").get(verifyToken, user.infoUser);
 
   // edit profile
   apiRouter.route("/edit").put(verifyToken, user.editUser);
-
+  */
+ 
   // lost password - client
   apiRouter.route("/lost").post(user.lostPassword);
 
   // lost password - website
   apiRouter.route("/lost/reset").post(user.resetPassword);
-
-
 
   return apiRouter;
 })();
