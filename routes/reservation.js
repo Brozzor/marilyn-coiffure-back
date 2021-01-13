@@ -9,19 +9,19 @@ const database = require("../db/connection");
 //                                Crud Reservation                      //
 /////////////////////////////////////////////////////////////////////////
 
-async function avaibility() {//disponibilité
+async function avaibility(req, res) {//disponibilité
 
 }
 
-async function booking() {//crée une reservation
+async function booking(req, res) {//crée une reservation
 
 }
 
-async function modifyBooking() {//modifie une reservation
+async function modifyBooking(req, res) {//modifie une reservation
 
 }
 
-async function removeBooking() {//retire une reservation
+async function removeBooking(req, res) {//retire une reservation
 
 }
 
