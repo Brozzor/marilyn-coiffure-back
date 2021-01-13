@@ -13,3 +13,4 @@ let reservationSchema = new Schema({
     montant: { type: Number, required: false },
     payementType: { type: String, required: false },
 });
+module.exports = mongoose.model('reservation-data', reservationSchema);   

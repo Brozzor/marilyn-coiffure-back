@@ -1,5 +1,6 @@
 const express = require("express");
 const user = require("./routes/user");
+const reservation = require("./routes/reservation");
 const verifyToken = require("./services/verifyToken");
 
 exports.router = (function () {
@@ -28,12 +29,19 @@ exports.router = (function () {
   // edit profile
   apiRouter.route("/edit").put(verifyToken, user.editUser);
   */
- 
+
   // lost password - client
   apiRouter.route("/lost").post(user.lostPassword);
 
   // lost password - website
   apiRouter.route("/lost/reset").post(user.resetPassword);
+
+
+  //////////////////////////////////////////////////////////////////////////
+  //                                 Réservation                           //
+  //////////////////////////////////////////////////////////////////////////
+
+
 
   return apiRouter;
 })();
