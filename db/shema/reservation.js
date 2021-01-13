@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 let reservationSchema = new Schema({
     dateReservation: { type: String, required: true },
     address: {
-        address: { type: String, required: true }, city: { type: String, required: true },
+        street: { type: String, required: true }, city: { type: String, required: true },
         zip: { type: String, required: true }
     },
     status: { type: String, required: true },

@@ -1,5 +1,5 @@
 module.exports = class User {
-  constructor(mail, firstname, lastname, address, city, zip, password, mobile, ip) {
+  constructor(mail, firstname, lastname, street, city, zip, password, mobile, ip) {
     this.mail = mail;
     this.firstname = firstname;
     this.lastname = lastname;
@@ -13,7 +13,7 @@ module.exports = class User {
       token: null,
     };
     this.address = {
-      address: address,
+      street: street,
       city: city,
       zip: zip,
     };
