@@ -7,3 +7,4 @@ let produitSchema = new Schema({
     marque: { type: String, required: true },
     prix: { type: Number, required: true }
 })
+module.exports = mongoose.model('produit-data', produitSchema);   
