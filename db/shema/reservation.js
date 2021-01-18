@@ -9,8 +9,8 @@ let reservationSchema = new Schema({
         zip: { type: String, required: true }
     },
     status: { type: String, required: true },
-    produitDerive: { type: Array, required: false, default: [] },
-    montant: { type: Number, required: false },
-    payementType: { type: String, required: false },
+    derivatives: { type: Array, required: false, default: [] },
+    amount: { type: Number, required: false },
+    paymentType: { type: String, required: false },
 });
 module.exports = mongoose.model('reservation-data', reservationSchema);   

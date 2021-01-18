@@ -1,5 +1,6 @@
 module.exports = class Salon {
-    constructor(balance) {
-        this.balance = balance;
+    constructor(name) {
+        this.name = name;
+        this.totalAmount = 0;
     }
 }
