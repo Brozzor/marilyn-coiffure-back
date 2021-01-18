@@ -13,4 +13,4 @@ let reservationSchema = new Schema({
     amount: { type: Number, required: false },
     paymentType: { type: String, required: false },
 });
-module.exports = mongoose.model('reservation-data', reservationSchema);   
+module.exports = mongoose.model('reservation', reservationSchema);   
