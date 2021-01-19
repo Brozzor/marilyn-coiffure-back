@@ -6,7 +6,7 @@ module.exports = class Reservation {
             city: city,
             zip: zip,
           };
-        this.status = "";
+        this.status = "unpaid";
         this.derivatives = [];
         this.amount = 0;
         this.paymentType = "";
