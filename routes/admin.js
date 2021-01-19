@@ -25,7 +25,10 @@ async function balance(req, res) {//balance de la société
 }
 
 async function addToBalance(req, res) {
+    const balance = await SalonShema.findOneAndUpdate({}, { $inc: { balance: req.body.amount } });
 
+
+    return res.status(200).header("tokenSession", req.headers["tokensession"]).json(balance);
 }
 
 async function addBookingPaid(req, res) {//ajout des des reservation payé
@@ -36,5 +39,6 @@ async function addBookingPaid(req, res) {//ajout des des reservation payé
 module.exports = {
     bookinglist,
     balance,
+    addToBalance,
     addBookingPaid
 };

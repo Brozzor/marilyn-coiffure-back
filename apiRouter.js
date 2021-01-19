@@ -34,9 +34,11 @@ exports.router = (function () {
   //////////////////////////////////////////////////////////////////////////
   //                                 Admin                                //
   //////////////////////////////////////////////////////////////////////////
+
+  //salon balance
   apiRouter.route("/admin/balance").get(verifyToken, admin.balance);
-
-
+  // add To Balance
+  apiRouter.route("/admin/balance/add").post(verifyToken, admin.addToBalance);
 
   // lost password - client
   apiRouter.route("/lost").post(user.lostPassword);
