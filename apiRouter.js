@@ -1,5 +1,6 @@
 const express = require("express");
 const user = require("./routes/user");
+const admin = require("./routes/admin");
 const reservation = require("./routes/reservation");
 const verifyToken = require("./services/verifyToken");
 
@@ -29,6 +30,13 @@ exports.router = (function () {
   // edit profile
   apiRouter.route("/edit").put(verifyToken, user.editUser);
   */
+
+  //////////////////////////////////////////////////////////////////////////
+  //                                 Admin                                //
+  //////////////////////////////////////////////////////////////////////////
+  apiRouter.route("/admin/balance").get(verifyToken, admin.balance);
+
+
 
   // lost password - client
   apiRouter.route("/lost").post(user.lostPassword);
