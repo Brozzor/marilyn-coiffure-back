@@ -15,6 +15,26 @@ async function avaibility(req, res) {//disponibilité
 
 async function booking(req, res) {//crée une reservation
 
+    const ip = req.headers["x-forwarded-for"].split(',')[0] || req.connection.remoteAddress;
+  
+    /*
+    if (await isUserExist.byMail(req.body.mail)) {
+      return res.status(400).json({
+        status: "Mail is already use",
+      });
+    }*/
+
+    newBook = new ReservationShema(new Reservation(req.body.reservation, req.body.street, req.body.city, req.body.zip, 0, ip, req.body.mobile, req.body.mail));
+    newBook.save((err, data) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(400);
+      } else {
+        console.log(err);
+        return res.sendStatus(200);
+      }
+    });
+
 }
 
 async function modifyBooking(req, res) {//modifie une reservation

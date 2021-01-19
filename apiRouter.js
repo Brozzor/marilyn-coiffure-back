@@ -41,7 +41,8 @@ exports.router = (function () {
   //                                 Réservation                           //
   //////////////////////////////////////////////////////////////////////////
 
-
+  // register user
+  apiRouter.route("/reservation/booking").post(reservation.booking);
 
   return apiRouter;
 })();

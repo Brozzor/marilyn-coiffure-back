@@ -17,4 +17,4 @@ let userSchema = new Schema({
     mobile: { type: Number, required: true }
 },{ collection: "user-data" });
 
-module.exports = mongoose.model('user', userSchema);    
+module.exports = mongoose.model('user-data', userSchema);    
