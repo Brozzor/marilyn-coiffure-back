@@ -32,7 +32,13 @@ async function addToBalance(req, res) {
 }
 
 async function addBookingPaid(req, res) {//ajout des des reservation payé
+    if (!req.body.amount) {
+        return res.status(400).json({
+            error: "Montant pas fournie",
+        });
+    }
 
+    const reservationPaid = await ReservationShema.findOneAndUpdate({ _id: req.params.id }, { $set: { amount: req.body.amount, status: "paid" } });
 }
 
 
