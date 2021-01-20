@@ -23,6 +23,12 @@ exports.router = (function () {
   // my info
   apiRouter.route("/info").get(verifyToken, user.myInfo);
 
+  // lost password - client
+  apiRouter.route("/lost").post(user.lostPassword);
+
+  // lost password - website
+  apiRouter.route("/lost/reset").post(user.resetPassword);
+
   /*
   // info user
   apiRouter.route("/info/:id").get(verifyToken, user.infoUser);
@@ -40,11 +46,6 @@ exports.router = (function () {
   // add To Balance
   apiRouter.route("/admin/balance/add").post(verifyToken, admin.addToBalance);
 
-  // lost password - client
-  apiRouter.route("/lost").post(user.lostPassword);
-
-  // lost password - website
-  apiRouter.route("/lost/reset").post(user.resetPassword);
 
 
   //////////////////////////////////////////////////////////////////////////
@@ -53,6 +54,9 @@ exports.router = (function () {
 
   // register user
   apiRouter.route("/reservation/booking").post(reservation.booking);
+
+  // cancel reservation
+  apiRouter.route("/reservation/remove/:id").delete(reservation.removeBooking);
 
   return apiRouter;
 })();

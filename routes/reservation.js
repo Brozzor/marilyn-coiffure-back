@@ -43,17 +43,15 @@ async function booking(req, res) {
   });
 }
 
-async function modifyBooking(req, res) {
-  //modifie une reservation
-}
 
 async function removeBooking(req, res) {
-  //retire une reservation
+
+    await ReservationShema.findOneAndUpdate({ _id: req.params.id }, { $set: { status: "canceled" }  });
+    return res.sendStatus(200);
 }
 
 module.exports = {
   avaibility,
   booking,
-  modifyBooking,
   removeBooking,
 };
