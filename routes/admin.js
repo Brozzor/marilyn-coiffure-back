@@ -2,7 +2,7 @@
 //db and schema
 const User = require("../db/type/user");
 const UserShema = require("../db/shema/user");
-const Reservation = require("../db/type/Reservation");
+const Reservation = require("../db/type/reservation");
 const ReservationShema = require("../db/shema/reservation");
 const SalonShema = require("../db/shema/salon");
 const database = require("../db/connection");
