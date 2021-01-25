@@ -129,7 +129,9 @@ async function updateUser(id, tokenSession, res) {
 
   if (update) {
     return res.status(200).header("tokenSession", tokenSession).json({
+
       status: "success",
+      tokensession: tokenSession,
     });
   } else {
     return res.sendStatus(400);
