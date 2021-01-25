@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 let reservationSchema = new Schema({
     dateReservation: { type: Number, required: true },
+    timetables:{ type: String, required: false },
     address: { type: Object, required: true },
     status: { type: String, required: true },
     derivatives: { type: Array, required: false },
