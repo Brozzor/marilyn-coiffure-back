@@ -28,7 +28,7 @@ async function booking(req, res) {
 
   if (!req.body.reservation || !req.body.street || !req.body.city || !req.body.zip || !req.body.mobile || !mailCheck.validate(req.body.mail) || !req.body.timetables){
     return res.status(400).json({
-      error: "Formulaire incorrect",
+      error: "Formulaire incomplet/incorrect",
     });
   }
 
@@ -36,7 +36,9 @@ async function booking(req, res) {
   newBook.save((err, data) => {
     if (err) {
       console.log(err);
-      return res.sendStatus(400);
+      return res.status(400).json({
+        error: "Formulaire incomplet/incorrect",
+      });
     } else {
       return res.sendStatus(200);
     }
