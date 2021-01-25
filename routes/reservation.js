@@ -26,13 +26,13 @@ async function booking(req, res) {
       });
     }*/
 
-  if (!req.body.reservation || !req.body.street || !req.body.city || !req.body.zip || !req.body.mobile || !mailCheck.validate(req.body.mail)) {
+  if (!req.body.reservation || !req.body.street || !req.body.city || !req.body.zip || !req.body.mobile || !mailCheck.validate(req.body.mail)){
     return res.status(400).json({
       error: "Formulaire incorrect",
     });
   }
 
-  newBook = new ReservationShema(new Reservation(req.body.reservation, req.body.street, req.body.city, req.body.zip, 0, ip, req.body.mobile, req.body.mail));
+  newBook = new ReservationShema(new Reservation(req.body.reservation, req.body.street, req.body.city, req.body.zip, 0, ip, req.body.mobile, req.body.mail, req.body.comment));
   newBook.save((err, data) => {
     if (err) {
       console.log(err);

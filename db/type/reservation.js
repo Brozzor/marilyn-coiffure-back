@@ -1,5 +1,5 @@
 module.exports = class Reservation {
-    constructor(dateReservation, street, city, zip, uid, ip, mobile, mail) {
+    constructor(dateReservation, street, city, zip, uid, ip, mobile, mail, comment) {
         this.dateReservation = dateReservation;
         this.address = {
             street: street,
@@ -14,5 +14,6 @@ module.exports = class Reservation {
         this.ip = ip;
         this.mobile = mobile;
         this.mail = mail;
+        this.comment = comment;
     };
 }
