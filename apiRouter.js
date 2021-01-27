@@ -62,8 +62,5 @@ exports.router = (function () {
   // register user
   apiRouter.route("/reservation/booking").post(reservation.booking);
 
-  // cancel reservation
-  apiRouter.route("/reservation/remove/:id").delete(reservation.removeBooking);
-
   return apiRouter;
 })();

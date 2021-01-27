@@ -54,7 +54,7 @@ async function reservation(req, res) {
 }
 
 async function displayOneReservation(req, res) {
-  const reservation = await ReservationShema.findById(req.body.id);
+  const reservation = await ReservationShema.findById(req.params.id);
   return res.status(200).json(reservation);
 }
 
