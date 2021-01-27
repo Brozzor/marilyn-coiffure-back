@@ -41,11 +41,8 @@ exports.router = (function () {
   //                                 Admin                                //
   //////////////////////////////////////////////////////////////////////////
 
-  //salon balance
-  apiRouter.route("/admin/balance").get(verifyToken, admin.balance);
-  // add To Balance
-  apiRouter.route("/admin/balance/add").post(verifyToken, admin.addToBalance);
-
+  //dashboard
+  apiRouter.route("/admin/dashboard").get(verifyToken, admin.dashboard);
 
 
   //////////////////////////////////////////////////////////////////////////
