@@ -32,11 +32,10 @@ async function dashboard(req, res) {
   let amountLast30Days = 0;
   let nbBookingLast30DaysPay = 0;
   bookingLast30Days.forEach((elem) => {
-      if (elem.amount){
-            amountLast30Days += elem.amount;
-            nbBookingLast30DaysPay++;
-      }
-    
+    if (elem.amount) {
+      amountLast30Days += elem.amount;
+      nbBookingLast30DaysPay++;
+    }
   });
 
   ret.lastBooking = bookingList;
