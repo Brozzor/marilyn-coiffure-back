@@ -17,5 +17,6 @@ module.exports = class Reservation {
         this.comment = comment;
         this.timetables = timetables;
         this.name = name;
+        this.dateInsertion = Math.round(+new Date() / 1000);
     };
 }

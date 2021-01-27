@@ -15,6 +15,7 @@ let reservationSchema = new Schema({
     mobile: { type: Number, required: false },
     mail: { type: String, required: false },
     comment: { type: String, required: false },
-    name: { type: String, required: true }
+    name: { type: String, required: true },
+    dateInsertion: { type: Number, required: true },
 },{ collection: "reservation" });
 module.exports = mongoose.model('reservation', reservationSchema);   

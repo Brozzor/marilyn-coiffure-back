@@ -44,9 +44,11 @@ exports.router = (function () {
   //dashboard
   apiRouter.route("/admin/dashboard").get(verifyToken, admin.dashboard);
 
+  //affichage des reservation
+  apiRouter.route("/admin/reservation/:nb").get(verifyToken, admin.reservation);
 
   //////////////////////////////////////////////////////////////////////////
-  //                                 Réservation                           //
+  //                                 Réservation                          //
   //////////////////////////////////////////////////////////////////////////
 
   // register user
