@@ -1,5 +1,5 @@
 module.exports = class Reservation {
-    constructor(dateReservation, street, city, zip, uid, ip, mobile, mail, comment, timetables, name) {
+    constructor(dateReservation, street, city, zip, uid, ip, mobile, mail, comment, timetables, name,hours = 0) {
         this.dateReservation = dateReservation;
         this.address = {
             street: street,
@@ -17,6 +17,7 @@ module.exports = class Reservation {
         this.comment = comment;
         this.timetables = timetables;
         this.name = name;
+        this.hours = hours;
         this.dateInsertion = Math.round(+new Date() / 1000);
     };
 }

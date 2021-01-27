@@ -46,36 +46,77 @@ async function dashboard(req, res) {
 }
 
 async function reservation(req, res) {
-    
-    const lastMonth = Math.round(+new Date() / 1000) - 2592000;
-    const nextThreeMonth = Math.round(+new Date() / 1000) + (2592000 * 3);
+  const lastMonth = Math.round(+new Date() / 1000) - 2592000;
+  const nextThreeMonth = Math.round(+new Date() / 1000) + 2592000 * 3;
 
-    const bookingList = await ReservationShema.find({ dateReservation: { $gt: lastMonth, $lt: nextThreeMonth } });
-    return res.status(200).json(bookingList);
-  }
+  const bookingList = await ReservationShema.find({ dateReservation: { $gt: lastMonth, $lt: nextThreeMonth } });
+  return res.status(200).json(bookingList);
+}
+
+async function displayOneReservation(req, res) {
+  const reservation = await ReservationShema.findById(req.body.id);
+  return res.status(200).json(reservation);
+}
+
+async function addReservation(req, res) {
+ 
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+    if (!req.body.reservation || !req.body.mobile || !mailCheck.validate(req.body.mail) || !req.body.name){
+      return res.status(400).json({
+        error: "Formulaire incomplet/incorrect",
+      });
+    }
+  
+    newBook = new ReservationShema(new Reservation(req.body.reservation, req.body.street, req.body.city, req.body.zip, 0, ip, req.body.mobile, req.body.mail, req.body.comment,req.body.timetables, req.body.name));
+    newBook.save((err, data) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).json({
+          error: "Formulaire incomplet/incorrect",
+        });
+      } else {
+        return res.sendStatus(200);
+      }
+    });
+      
+}
+
+async function editReservation(req, res) {
+
+    await ReservationShema.findOneAndUpdate(
+        { _id: req.body.id },
+        {
+          $set: {
+            dateReservation: req.body.dateReservation,
+            address: {
+              street: req.body.street,
+              city: req.body.city,
+              zip: req.body.zip,
+            },
+            status: req.body.status,
+            amount: req.body.amount,
+            paymentType: req.body.paymentType,
+            mail: req.body.mobile,
+            hours: req.body.mobile,
+          },
+        }
+      );
+      return res.sendStatus(200);
+}
 
 async function addToBalance(req, res) {
   const balance = await SalonShema.findOneAndUpdate({}, { $inc: { balance: req.body.amount } });
-
   return res.status(200).json(balance);
-}
-
-async function addBookingPaid(req, res) {
-  //ajout des des reservation payé
-  if (!req.body.amount) {
-    return res.status(400).json({
-      error: "Montant pas fournie",
-    });
-  }
-
-  const reservationPaid = await ReservationShema.findOneAndUpdate({ _id: req.params.id }, { $set: { amount: req.body.amount, status: "paid" } });
 }
 
 module.exports = {
   bookinglist,
   balance,
   addToBalance,
-  addBookingPaid,
   dashboard,
-  reservation
+  reservation,
+  displayOneReservation,
+  addReservation,
+  editReservation,
 };

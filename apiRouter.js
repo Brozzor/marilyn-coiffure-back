@@ -47,6 +47,14 @@ exports.router = (function () {
   //affichage des reservation
   apiRouter.route("/admin/reservation").get(verifyToken, admin.reservation);
 
+  //affichage d'une reservation
+  apiRouter.route("/admin/reservation/:id").get(verifyToken, admin.displayOneReservation);
+
+  //ajout d'une reservation
+  apiRouter.route("/admin/reservation/add").post(verifyToken, admin.addReservation);
+
+  //edit d'une reservation
+  apiRouter.route("/admin/reservation/edit").post(verifyToken, admin.editReservation);
   //////////////////////////////////////////////////////////////////////////
   //                                 Réservation                          //
   //////////////////////////////////////////////////////////////////////////
