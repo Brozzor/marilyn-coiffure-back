@@ -50,10 +50,7 @@ async function reservation(req, res) {
     const lastMonth = Math.round(+new Date() / 1000) - 2592000;
     const nextThreeMonth = Math.round(+new Date() / 1000) + (2592000 * 3);
 
-    if (req.params.nb > 400){
-        req.params.nb = 400;
-    }
-    const bookingList = await ReservationShema.find({ dateReservation: { $gt: lastMonth, $lt: nextThreeMonth } }).limit(req.params.nb);
+    const bookingList = await ReservationShema.find({ dateReservation: { $gt: lastMonth, $lt: nextThreeMonth } });
     return res.status(200).json(bookingList);
   }
 
