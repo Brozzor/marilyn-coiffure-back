@@ -85,7 +85,7 @@ async function addReservation(req, res) {
 async function editReservation(req, res) {
 
     await ReservationShema.findOneAndUpdate(
-        { _id: req.body.id },
+        { _id: req.body._id },
         {
           $set: {
             dateReservation: req.body.dateReservation,
