@@ -97,7 +97,7 @@ async function editReservation(req, res) {
             status: req.body.status,
             amount: req.body.amount,
             paymentType: req.body.paymentType,
-            mail: req.body.mobile,
+            mail: req.body.mail,
             hours: req.body.mobile,
           },
         }
