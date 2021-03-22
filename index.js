@@ -18,4 +18,4 @@ app.use(function (req, res, next) {
 });
 app.use("/", apiRouter);
 
-server.listen(process.env.PORT || 8090);
+server.listen(process.env.PORT || 1339);

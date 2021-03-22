@@ -5,7 +5,7 @@ let transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "contact@marilyn-buisson.fr",
+    user: "contact@marilyn-coiffure.fr",
     pass: process.env.MAILPASS,
   },
   tls: {
@@ -14,11 +14,11 @@ let transporter = nodemailer.createTransport({
 });
 
 let mailOptions = {
-  from: "Marilyn Buisson <contact@marilyn-buisson.fr>",
-  to: "377roro@gmail.com",
-  subject: "rien",
+  from: "Marilyn Buisson <contact@marilyn-coiffure.fr>",
+  to: "contact@marilyn-coiffure.fr",
+  subject: "Prise de rendez vous",
   html: "<p>Hello </p>",
-  bcc: "contact@marilyn-buisson.fr"
+  bcc: "contact@marilyn-coiffure.fr"
 };
 
 module.exports = {
