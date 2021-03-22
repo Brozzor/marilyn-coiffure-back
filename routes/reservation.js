@@ -1,30 +1,16 @@
 // To declare
 //db and schema
-const Reservation = require("../db/type/reservation");
-const ReservationShema = require("../db/shema/reservation");
 const mailCheck = require("email-validator");
-const database = require("../db/connection");
 
 //////////////////////////////////////////////////////////////////////////
 //                                Crud Reservation                      //
 /////////////////////////////////////////////////////////////////////////
 
-async function avaibility(req, res) {
-  //disponibilité
-}
 
 async function booking(req, res) {
   //crée une reservation
 
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  //const ip = req.headers["x-forwarded-for"].split(',')[0] || req.connection.remoteAddress;
-
-  /*
-    if (await isUserExist.byMail(req.body.mail)) {
-      return res.status(400).json({
-        status: "Mail is already use",
-      });
-    }*/
 
   if (!req.body.reservation || !req.body.street || !req.body.city || !req.body.zip || !req.body.mobile || !mailCheck.validate(req.body.mail) || !req.body.timetables || !req.body.name){
     return res.status(400).json({
@@ -32,10 +18,23 @@ async function booking(req, res) {
     });
   }
 
-  newBook = new ReservationShema(new Reservation(req.body.reservation, req.body.street, req.body.city, req.body.zip, 0, ip, req.body.mobile, req.body.mail, req.body.comment,req.body.timetables, req.body.name));
-  newBook.save((err, data) => {
-    if (err) {
-      console.log(err);
+  mail.mailOptions.html = `
+  <div align="center">
+    <br />
+    <u>Nom :</u>${req.body.name}<br />
+    <u>Rue :</u>${req.body.street}<br />
+    <u>Ville :</u>${req.body.city}<br />
+    <u>Code postal :</u>${req.body.zip}<br />
+    <u>Numéro de telephone :</u><a href="tel:${req.body.mobile}">${req.body.mobile}</a><br />
+    <u>Mail de l'expéditeur :</u>${req.body.email}<br />
+    <u>heure de la journée privilégier :</u>${req.body.timetables}<br />
+    <u>jour demander :</u>${req.body.reservation}<br />
+    </div>
+  `;
+
+  mail.transporter.sendMail(mail.mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
       return res.status(400).json({
         error: "Formulaire incomplet/incorrect",
       });
@@ -46,14 +45,8 @@ async function booking(req, res) {
 }
 
 
-async function removeBooking(req, res) {
 
-    await ReservationShema.findOneAndUpdate({ _id: req.params.id }, { $set: { status: "canceled" }  });
-    return res.sendStatus(200);
-}
 
 module.exports = {
-  avaibility,
   booking,
-  removeBooking,
 };
