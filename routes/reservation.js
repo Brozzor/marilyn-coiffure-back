@@ -21,6 +21,7 @@ async function booking(req, res) {
   mail.mailOptions.html = `
   <div align="center">
     <br />
+    <u>Adresse IP :</u>${ip}<br />
     <u>Nom :</u>${req.body.name}<br />
     <u>Rue :</u>${req.body.street}<br />
     <u>Ville :</u>${req.body.city}<br />
